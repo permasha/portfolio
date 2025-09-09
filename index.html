@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Денис - Java Developer | Портфолио</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #1a1a2e 100%);
+            color: #e5e5e5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .slide-in {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 30, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8b5cf6;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #e5e5e5;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #8b5cf6;
+        }
+
+        .lang-toggle {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Герой секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1), transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #9ca3af;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #d1d5db;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-card {
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        /* Секции */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Навыки */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-card {
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        /* Проекты */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #4c1d95, #7c3aed, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #8b5cf6;
+        }
+
+        .project-description {
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Опыт работы */
+        .experience-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #8b5cf6, #a855f7);
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 2rem;
+            width: 1rem;
+            height: 1rem;
+            background: #8b5cf6;
+            border-radius: 50%;
+            border: 3px solid #1e1e2e;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Контакты */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #8b5cf6;
+        }
+
+        /* Футер */
+        .footer {
+            background: rgba(30, 30, 46, 0.95);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .experience-timeline {
+                padding-left: 1rem;
+            }
+
+            .experience-timeline::before {
+                left: 0.5rem;
+            }
+
+            .experience-item::before {
+                left: -1.5rem;
+            }
+        }
+
+        /* Скрытие секций для переключения языка */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Denis.dev</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-ru="Главная" data-en="Home">Главная</a></li>
+                <li><a href="#about" class="nav-link" data-ru="О себе" data-en="About">О себе</a></li>
+                <li><a href="#projects" class="nav-link" data-ru="Проекты" data-en="Projects">Проекты</a></li>
+                <li><a href="#experience" class="nav-link" data-ru="Опыт" data-en="Experience">Опыт</a></li>
+                <li><a href="#contact" class="nav-link" data-ru="Контакты" data-en="Contact">Контакты</a></li>
+                <li><button class="lang-toggle" onclick="toggleLanguage()">EN</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <h1 data-ru="Привет, я permasha!" data-en="Hi, I'm permasha!">Привет, я Денис!</h1>
+                <div class="subtitle" data-ru="Java Developer & Plugin Creator" data-en="Java Developer & Plugin Creator">Java Developer & Plugin Creator</div>
+                <p data-ru="Создаю качественные плагины для Minecraft серверов уже 4 года. Специализируюсь на Spigot, BungeeCord и работе с базами данных." data-en="Creating quality plugins for Minecraft servers for 4 years. Specializing in Spigot, BungeeCord and database management.">
+                    Создаю качественные плагины для Minecraft серверов уже 4 года. Специализируюсь на Spigot, BungeeCord и работе с базами данных.
+                </p>
+                <button class="cta-button" onclick="scrollToSection('contact')">
+                    <i class="fas fa-paper-plane"></i>
+                    <span data-ru="Связаться со мной" data-en="Contact Me">Связаться со мной</span>
+                </button>
+            </div>
+            <div class="hero-image slide-in">
+                <div class="profile-card">
+                    <div class="avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 data-ru="Денис, 19 лет" data-en="Denis, 19 years old">Денис, 19 лет</h3>
+                    <p data-ru="Java разработчик" data-en="Java Developer">Java разработчик</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О себе -->
+    <section id="about" class="section">
+        <h2 class="section-title" data-ru="Мои навыки" data-en="My Skills">Мои навыки</h2>
+        <div class="skills-grid">
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fab fa-java"></i></div>
+                <h3 data-ru="Java Development" data-en="Java Development">Java Development</h3>
+                <p data-ru="Глубокие знания ООП, понимание конвенций кода и принципов чистого кода" data-en="Deep knowledge of OOP, understanding of code conventions and clean code principles">Глубокие знания ООП, понимание конвенций кода и принципов чистого кода</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-server"></i></div>
+                <h3 data-ru="Minecraft API" data-en="Minecraft API">Minecraft API</h3>
+                <p data-ru="Опыт работы с Spigot, BungeeCord, Velocity, CraftBukkit API и NMS" data-en="Experience with Spigot, BungeeCord, Velocity, CraftBukkit API and NMS">Опыт работы с Spigot, BungeeCord, Velocity, CraftBukkit API и NMS</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                <h3 data-ru="Базы данных" data-en="Databases">Базы данных</h3>
+                <p data-ru="Работа с MariaDB, MySQL, Redis, SQLite и оптимизация запросов" data-en="Working with MariaDB, MySQL, Redis, SQLite and query optimization">Работа с MariaDB, MySQL, Redis, SQLite и оптимизация запросов</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                <h3 data-ru="DevOps" data-en="DevOps">DevOps</h3>
+                <p data-ru="Git, Maven, системное администрирование и автоматизация процессов" data-en="Git, Maven, system administration and process automation">Git, Maven, системное администрирование и автоматизация процессов</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Проекты -->
+    <section id="projects" class="section">
+        <h2 class="section-title" data-ru="Мои проекты" data-en="My Projects">Мои проекты</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title" data-ru="Мини-игры плагин" data-en="Mini-games Plugin">Мини-игры плагин</h3>
+                    <p class="project-description" data-ru="Комплексный плагин для создания различных мини-игр на сервере с системой рейтинга и наград" data-en="Comprehensive plugin for creating various mini-games on the server with rating and reward system">
+                        Комплексный плагин для создания различных мини-игр на сервере с системой рейтинга и наград
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Spigot</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Redis</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title" data-ru="Анти-чит система" data-en="Anti-cheat System">Анти-чит система</h3>
+                    <p class="project-description" data-ru="Продвинутая система защиты от читеров с машинным обучением и детальной аналитикой" data-en="Advanced anti-cheat system with machine learning and detailed analytics">
+                        Продвинутая система защиты от читеров с машинным обучением и детальной аналитикой
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">NMS</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title" data-ru="Proxy плагин" data-en="Proxy Plugin">Proxy плагин</h3>
+                    <p class="project-description" data-ru="Система управления несколькими серверами через BungeeCord с балансировкой нагрузки" data-en="Multi-server management system via BungeeCord with load balancing">
+                        Система управления несколькими серверами через BungeeCord с балансировкой нагрузки
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">BungeeCord</span>
+                        <span class="tag">Velocity</span>
+                        <span class="tag">Load Balancing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Опыт работы -->
+    <section id="experience" class="section">
+        <h2 class="section-title" data-ru="Опыт работы" data-en="Work Experience">Опыт работы</h2>
+        <div class="experience-timeline">
+            <div class="experience-item fade-in">
+                <div class="company-logo">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3 data-ru="Freelance Java Developer" data-en="Freelance Java Developer">Freelance Java Developer</h3>
+                <p class="company-name" data-ru="Различные проекты" data-en="Various Projects">Различные проекты</p>
+                <p class="period" data-ru="2020 - настоящее время" data-en="2020 - Present">2020 - настоящее время</p>
+                <p data-ru="Разработка плагинов для Minecraft серверов, создание систем управления игроками, античит-систем и интеграции с базами данных." data-en="Developing plugins for Minecraft servers, creating player management systems, anti-cheat systems and database integrations.">
+                    Разработка плагинов для Minecraft серверов, создание систем управления игроками, античит-систем и интеграции с базами данных.
+                </p>
+            </div>
+            <div class="experience-item fade-in">
+                <div class="company-logo">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3 data-ru="Backend Developer" data-en="Backend Developer">Backend Developer</h3>
+                <p class="company-name" data-ru="GameCraft Studio" data-en="GameCraft Studio">GameCraft Studio</p>
+                <p class="period" data-ru="2022 - 2024" data-en="2022 - 2024">2022 - 2024</p>
+                <p data-ru="Разработка и поддержка серверной части игровых проектов, оптимизация производительности и работа с большими объемами данных." data-en="Development and maintenance of server-side game projects, performance optimization and working with large amounts of data.">
+                    Разработка и поддержка серверной части игровых проектов, оптимизация производительности и работа с большими объемами данных.
+                </p>
+            </div>
+            <div class="experience-item fade-in">
+                <div class="company-logo">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 data-ru="Junior Plugin Developer" data-en="Junior Plugin Developer">Junior Plugin Developer</h3>
+                <p class="company-name" data-ru="MineCraft Solutions" data-en="MineCraft Solutions">MineCraft Solutions</p>
+                <p class="period" data-ru="2021 - 2022" data-en="2021 - 2022">2021 - 2022</p>
+                <p data-ru="Создание пользовательских плагинов, исправление багов и добавление новых функций в существующие системы." data-en="Creating custom plugins, fixing bugs and adding new features to existing systems.">
+                    Создание пользовательских плагинов, исправление багов и добавление новых функций в существующие системы.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact" class="section">
+        <h2 class="section-title" data-ru="Связаться со мной" data-en="Contact Me">Связаться со мной</h2>
+        <div class="contact-grid">
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <h3>Telegram</h3>
+                <a href="https://t.me/permasha" class="contact-link" target="_blank">@permasha</a>
+            </div>
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fab fa-vk"></i>
+                </div>
+                <h3>VKontakte</h3>
+                <a href="https://vk.com/permasha" class="contact-link" target="_blank">vk.com/permasha</a>
+            </div>
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fab fa-discord"></i>
+                </div>
+                <h3>Discord</h3>
+                <span class="contact-link">permasha</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <p data-ru="© 2025 Денис. Все права защищены." data-en="© 2025 Denis. All rights reserved.">© 2025 Денис. Все права защищены.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'ru';
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'ru' ? 'en' : 'ru';
+            const button = document.querySelector('.lang-toggle');
+            
+            button.textContent = newLang === 'ru' ? 'EN' : 'RU';
+            
+            // Обновляем текст всех элементов с data-атрибутами
+            document.querySelectorAll('[data-ru][data-en]').forEach(element => {
+                element.textContent = element.getAttribute(`data-${newLang}`);
+            });
+            
+            currentLang = newLang;
+            
+            // Обновляем title страницы
+            document.title = newLang === 'ru' ? 'Денис - Java Developer | Портфолио' : 'Denis - Java Developer | Portfolio';
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Плавная навигация
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('href').substring(1);
+                scrollToSection(sectionId);
+            });
+        });
+
+        // Анимации при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за элементами с анимациями
+        document.querySelectorAll('.fade-in, .slide-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            observer.observe(el);
+        });
+
+        // Активная навигация при скролле
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+
+                if (scrollPos >= top && scrollPos < top + height) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.style.color = '#e5e5e5';
+                    });
+                    if (navLink) {
+                        navLink.style.color = '#8b5cf6';
+                    }
+                }
+            });
+        });
+
+        // Эффект параллакса для героя
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Добавляем интерактивность для карточек проектов
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Добавляем эффект печатающегося текста для заголовка
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Запускаем эффект печати при загрузке
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero-content h1');
+            const originalText = heroTitle.textContent;
+            typeWriter(heroTitle, originalText, 150);
+        });
+    </script>
+</body>
+</html>

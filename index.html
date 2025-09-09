@@ -351,8 +351,8 @@
         }
 
         .avatar-img {
-            width: 150px; /* или размер, который вы хотите */
-            height: 150px; /* или размер, который вы хотите */
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
         }
@@ -467,25 +467,119 @@
             border-top: 1px solid rgba(139, 92, 246, 0.3);
         }
 
+        /* Мобильное меню */
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: #e5e5e5;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
+            /* Навигация для мобильных */
+            .nav-container {
+                padding: 0 1rem;
             }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .mobile-menu-button {
+                display: block;
             }
 
             .nav-menu {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(30, 30, 46, 0.98);
+                flex-direction: column;
+                padding: 2rem 0;
+                gap: 1rem;
             }
 
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .lang-toggle {
+                position: static;
+                width: auto;
+                height: auto;
+                border-radius: 25px;
+                padding: 0.5rem 1rem;
+                margin-top: 1rem;
+            }
+
+            /* Hero section для мобильных */
+            .hero {
+                min-height: 100vh;
+                padding: 6rem 1rem 2rem;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+                word-break: break-word;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            /* Avatar для мобильных */
+            .avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .avatar-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-card {
+                padding: 1.5rem;
+            }
+
+            /* Секции для мобильных */
             .section {
                 padding: 4rem 1rem;
             }
 
+            .section-title {
+                font-size: 2rem;
+            }
+
+            /* Проекты для мобильных */
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card.expanded {
+                transform: scale(1.02);
+                position: relative;
+            }
+
+            /* Опыт работы для мобильных */
             .experience-timeline {
                 padding-left: 1rem;
             }
@@ -498,20 +592,46 @@
                 left: -1.5rem;
             }
 
-                /* показываем кнопку переключения языка */
-            
+            .experience-item {
+                padding: 1.5rem;
+            }
 
-    /* если хотите фиксировать кнопку в правом нижнем углу */
-            .lang-toggle {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 999;
-                width: 56px;
-                height: 56px;
-                border-radius: 50%;
-                box-shadow: 0 4px 12px rgba(0,0,0,.3);
-            }   
+            /* Навыки для мобильных */
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            /* Контакты для мобильных */
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
         }
 
         /* Скрытие секций для переключения языка */
@@ -525,7 +645,10 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">permasha.dev</div>
-            <ul class="nav-menu">
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home" class="nav-link" data-ru="Главная" data-en="Home">Главная</a></li>
                 <li><a href="#about" class="nav-link" data-ru="О себе" data-en="About">О себе</a></li>
                 <li><a href="#projects" class="nav-link" data-ru="Проекты" data-en="Projects">Проекты</a></li>
@@ -579,7 +702,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon"><i class="fas fa-database"></i></div>
                 <h3 data-ru="Базы данных" data-en="Databases">Базы данных</h3>
-                <p data-ru="Работа с MariaDB, MySQL, Redis, SQLite" data-en="Working with MariaDB, MySQL, Redis, SQLite">Работа с MariaDB, MySQL, Redis, SQLiteросов</p>
+                <p data-ru="Работа с MariaDB, MySQL, Redis, SQLite" data-en="Working with MariaDB, MySQL, Redis, SQLite">Работа с MariaDB, MySQL, Redis, SQLite</p>
             </div>
             <div class="skill-card fade-in">
                 <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
@@ -786,10 +909,37 @@
             document.title = newLang === 'ru' ? 'permasha - Java Developer | Портфолио' : 'permasha - Java Developer | Portfolio';
         }
 
+        function toggleMobileMenu() {
+            const menu = document.getElementById('nav-menu');
+            const button = document.querySelector('.mobile-menu-button');
+            const icon = button.querySelector('i');
+            
+            menu.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
         function scrollToSection(sectionId) {
             document.getElementById(sectionId).scrollIntoView({
                 behavior: 'smooth'
             });
+            
+            // Закрываем мобильное меню при клике на ссылку
+            const menu = document.getElementById('nav-menu');
+            const button = document.querySelector('.mobile-menu-button');
+            const icon = button.querySelector('i');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         }
 
         // Плавная навигация
@@ -823,41 +973,6 @@
             observer.observe(el);
         });
 
-        /*
-        // Активная навигация при скролле
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const scrollPos = window.scrollY + 100;
-
-            sections.forEach(section => {
-                const top = section.offsetTop;
-                const height = section.offsetHeight;
-                const id = section.getAttribute('id');
-                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
-
-                if (scrollPos >= top && scrollPos < top + height) {
-                    document.querySelectorAll('.nav-link').forEach(link => {
-                        link.style.color = '#e5e5e5';
-                    });
-                    if (navLink) {
-                        navLink.style.color = '#8b5cf6';
-                    }
-                }
-            });
-        });
-        */
-
-        /*
-        // Эффект параллакса для героя
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero && scrolled < window.innerHeight) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-        */
-
         // Добавляем интерактивность для карточек проектов
         document.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -867,15 +982,16 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) scale(1)';
             });
+            
             card.addEventListener('click', () => {
-                    // Скрыть все раскрытые проекты
-                    document.querySelectorAll('.project-card.expanded').forEach(expandedCard => {
-                        expandedCard.classList.remove('expanded');
-                    });
-
-                    // Раскрыть текущий проект
-                    card.classList.add('expanded');
+                // Скрыть все раскрытые проекты
+                document.querySelectorAll('.project-card.expanded').forEach(expandedCard => {
+                    expandedCard.classList.remove('expanded');
                 });
+
+                // Раскрыть текущий проект
+                card.classList.add('expanded');
+            });
         });
 
         // Добавляем эффект печатающегося текста для заголовка
@@ -898,6 +1014,20 @@
             const heroTitle = document.querySelector('.hero-content h1');
             const originalText = heroTitle.textContent;
             typeWriter(heroTitle, originalText, 150);
+        });
+
+        // Закрытие мобильного меню при клике вне его
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('nav-menu');
+            const button = document.querySelector('.mobile-menu-button');
+            const navbar = document.querySelector('.navbar');
+            
+            if (!navbar.contains(e.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                const icon = button.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     </script>
 </body>

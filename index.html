@@ -236,7 +236,7 @@
         /* Секции */
         .section {
             padding: 6rem 2rem;
-            max-width: 1200px;
+            max-width: 1400px; /* Увеличили ширину контейнера */
             margin: 0 auto;
         }
 
@@ -281,8 +281,10 @@
         /* Проекты */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Увеличили минимальную ширину */
+            gap: 2.5rem; /* Увеличили отступы */
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .project-card {
@@ -291,6 +293,7 @@
             overflow: hidden;
             border: 1px solid rgba(139, 92, 246, 0.3);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .project-card:hover {
@@ -298,22 +301,8 @@
             box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
         }
 
-        .project-card.expanded {
-            transform: scale(1.1);
-            z-index: 1000;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
-        }
-
-        .project-card.expanded .project-content {
-            padding: 2rem;
-        }
-
-        .project-card.expanded .project-image {
-            height: 300px;
-        }
-
         .project-image {
-            height: 200px;
+            height: 250px; /* Увеличили высоту изображения */
             background: linear-gradient(135deg, #4c1d95, #7c3aed, #8b5cf6);
             display: flex;
             align-items: center;
@@ -321,16 +310,39 @@
             font-size: 3rem;
             color: white;
             overflow: hidden;
+            position: relative;
         }
 
         .project-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-image .gif-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        .project-card.playing .project-image .gif-overlay {
+            opacity: 1;
+        }
+
+        .project-card.playing .project-image img {
+            opacity: 0;
         }
 
         .project-content {
-            padding: 1.5rem;
+            padding: 2rem; /* Увеличили внутренние отступы */
         }
 
         .project-title {
@@ -340,8 +352,9 @@
         }
 
         .project-description {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem; /* Увеличили отступ */
             color: #d1d5db;
+            line-height: 1.6;
         }
 
         .project-tags {
@@ -563,6 +576,7 @@
             /* Секции для мобильных */
             .section {
                 padding: 4rem 1rem;
+                max-width: 100%;
             }
 
             .section-title {
@@ -572,11 +586,16 @@
             /* Проекты для мобильных */
             .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 100%;
             }
 
-            .project-card.expanded {
-                transform: scale(1.02);
-                position: relative;
+            .project-image {
+                height: 200px; /* Меньше на мобильных */
+            }
+
+            .project-content {
+                padding: 1.5rem;
             }
 
             /* Опыт работы для мобильных */
@@ -610,6 +629,11 @@
             .contact-grid {
                 grid-template-columns: 1fr;
             }
+
+            .fab.fa-github {
+                font-size: 1.2rem;
+                margin-right: 0.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -631,6 +655,11 @@
 
             .logo {
                 font-size: 1.2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
 
@@ -671,6 +700,10 @@
                 <button class="cta-button" onclick="scrollToSection('contact')">
                     <i class="fas fa-paper-plane"></i>
                     <span data-ru="Связаться со мной" data-en="Contact Me">Связаться со мной</span>
+                </button>
+                <button class="cta-button" onclick="window.location.href='https://github.com/permasha';">
+                    <i class="fab fa-github"></i>
+                    <span data-ru="GitHub" data-en="GitHub">GitHub</span>
                 </button>
             </div>
             <div class="hero-image slide-in">
@@ -716,9 +749,10 @@
     <section id="projects" class="section">
         <h2 class="section-title" data-ru="Мои проекты" data-en="My Projects">Мои проекты</h2>
         <div class="projects-grid">
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project1.gif">
                 <div class="project-image">
                     <img src="project1.jpg" alt="Project Image">
+                    <img src="project1.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="Подземелья" data-en="Dungeons">Подземелья</h3>
@@ -732,9 +766,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project2.gif">
                 <div class="project-image">
                     <img src="project2.jpg" alt="Project Image">
+                    <img src="project2.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="Корабли" data-en="Ships">Корабли</h3>
@@ -748,9 +783,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project3.gif">
                 <div class="project-image">
                     <img src="project3.jpg" alt="Project Image">
+                    <img src="project3.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="Артефакты" data-en="Artifacts">Артефакты</h3>
@@ -765,14 +801,15 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project4.gif">
                 <div class="project-image">
                     <img src="project4.jpg" alt="Project Image">
+                    <img src="project4.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="CastleWars" data-en="CastleWars">CastleWars</h3>
-                    <p class="project-description" data-ru="Комадная мини-игра с захватом флагов https://github.com/permasha/CastleWars" data-en="Team mini-game with capturing flags https://github.com/permasha/CastleWars">
-                        Комадная мини-игра с захватом флагов https://github.com/permasha/CastleWars
+                    <p class="project-description" data-ru="Комадная мини-игра с захватом флагов" data-en="Team mini-game with capturing flags">
+                        Комадная мини-игра с захватом флагов
                     </p>
                     <div class="project-tags">
                         <span class="tag">Java</span>
@@ -781,9 +818,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project5.gif">
                 <div class="project-image">
                     <img src="project5.jpg" alt="Project Image">
+                    <img src="project5.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="Defense мод" data-en="Defense mod">Defense мод</h3>
@@ -797,9 +835,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card fade-in" data-gif="project6.gif">
                 <div class="project-image">
                     <img src="project6.jpg" alt="Project Image">
+                    <img src="project6.gif" alt="Project GIF" class="gif-overlay">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title" data-ru="Creative Plus сборка" data-en="Creative Plus server setup">Creative Plus сборка</h3>
@@ -891,6 +930,7 @@
 
     <script>
         let currentLang = 'ru';
+        let activeProject = null;
 
         function toggleLanguage() {
             const newLang = currentLang === 'ru' ? 'en' : 'ru';
@@ -942,6 +982,31 @@
             }
         }
 
+        function playProjectGif(projectCard) {
+            // Остановить все активные GIF
+            document.querySelectorAll('.project-card.playing').forEach(card => {
+                if (card !== projectCard) {
+                    card.classList.remove('playing');
+                }
+            });
+
+            // Переключить состояние текущего проекта
+            projectCard.classList.toggle('playing');
+            
+            // Если GIF активен, остановить его через 5 секунд
+            if (projectCard.classList.contains('playing')) {
+                activeProject = projectCard;
+                setTimeout(() => {
+                    if (activeProject === projectCard) {
+                        projectCard.classList.remove('playing');
+                        activeProject = null;
+                    }
+                }, 5000);
+            } else {
+                activeProject = null;
+            }
+        }
+
         // Плавная навигация
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
@@ -976,21 +1041,20 @@
         // Добавляем интерактивность для карточек проектов
         document.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px) scale(1.02)';
+                if (!card.classList.contains('playing')) {
+                    card.style.transform = 'translateY(-10px) scale(1.02)';
+                }
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
+                if (!card.classList.contains('playing')) {
+                    card.style.transform = 'translateY(0) scale(1)';
+                }
             });
             
-            card.addEventListener('click', () => {
-                // Скрыть все раскрытые проекты
-                document.querySelectorAll('.project-card.expanded').forEach(expandedCard => {
-                    expandedCard.classList.remove('expanded');
-                });
-
-                // Раскрыть текущий проект
-                card.classList.add('expanded');
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                playProjectGif(card);
             });
         });
 
@@ -1029,7 +1093,16 @@
                 icon.classList.add('fa-bars');
             }
         });
+
+        // Остановка всех GIF при клике вне проектов
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.project-card')) {
+                document.querySelectorAll('.project-card.playing').forEach(card => {
+                    card.classList.remove('playing');
+                });
+                activeProject = null;
+            }
+        });
     </script>
 </body>
 </html>
-
